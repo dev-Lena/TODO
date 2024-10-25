@@ -17,12 +17,15 @@ struct GridTabView: View {
                             .cornerRadius(8)
                     }
                 }
+                .padding()
             }
             .navigationTitle("Todo Grid")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("마지막 할 일 삭제") {
-                        viewModel.deleteLastTodoCombine()
+                    Button("Delete Last") {
+                        Task {
+                            await viewModel.deleteLastTodo()
+                        }
                     }
                 }
             }
