@@ -14,10 +14,7 @@ struct ListTabView: View {
             .navigationTitle("Todos")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Add") {
-                        Task {
-                            await viewModel.addTodo("New Todo")
-                        }
+                    Button("Add") { viewModel.addTodo("New Todo")
                     }
                 }
             }

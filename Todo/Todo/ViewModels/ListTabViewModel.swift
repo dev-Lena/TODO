@@ -9,14 +9,19 @@ class ListTabViewModel: ObservableObject {
     
     init(_ todoService: TodoService) {
         self.todoService = todoService
-        todoService.todosPublisher
-            .sink { [weak self] todos in
-                self?.todos = todos
-            }
-            .store(in: &cancellables)
+        Task {
+            await todoService.todosPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] todos in
+                    self?.todos = todos
+                }
+                .store(in: &cancellables)
+                }
     }
     
-    func addTodo(_ title: String) async {
-        await todoService.addTodo(title)
+    func addTodo(_ title: String) {
+        Task {
+            await todoService.addTodo(title)
+        }
     }
 }
