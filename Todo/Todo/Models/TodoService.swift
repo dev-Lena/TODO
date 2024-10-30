@@ -17,7 +17,7 @@ actor TodoService: ObservableObject {
         todosSubject.send(todos)
     }
     
-    func addTodo(_ title: String) async {
+    func addTodo(_ title: String) {
         let newTodo = Todo(id: UUID(), title: title)
         todos.append(newTodo)
         repository.saveTodos(todos)
