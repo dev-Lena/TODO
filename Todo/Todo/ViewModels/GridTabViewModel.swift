@@ -1,22 +1,34 @@
 
 import SwiftUICore
-import Combine
 
 class GridTabViewModel: ObservableObject {
     private let todoService: TodoService
-    private var cancellables = Set<AnyCancellable>()
     @Published var todos: [Todo] = []
     
     init(_ todoService: TodoService) {
         self.todoService = todoService
-        todoService.todosPublisher
-            .sink { [weak self] todos in
-                self?.todos = todos
-            }
-            .store(in: &cancellables)
+        Task {
+            self.todos = await todoService.getAllTodos()
+        }
     }
     
     func deleteLastTodo() async {
         await todoService.deleteLastTodo()
+    }
+    
+    func deleteLastTodoAsync() {
+        Task {
+            let result = await todoService.deleteLastTodoAsync()
+            switch result {
+            case .success:
+                await refreshTodos()
+            case .failure(let error):
+                print("할 일 삭제 에러: \(error)")
+            }
+        }
+    }
+    
+    func refreshTodos() async {
+        self.todos = await todoService.getAllTodos()
     }
 }

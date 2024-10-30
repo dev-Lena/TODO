@@ -30,4 +30,14 @@ actor TodoService: ObservableObject {
         repository.saveTodos(todos)
         todosSubject.send(todos)
     }
+    
+    func deleteLastTodoAsync() async -> Result<Bool, Error> {
+            guard !todos.isEmpty else { return .failure(NSError(domain: "삭제할 할 일이 없습니다", code: 0, userInfo: nil)) }
+            todos.removeLast()
+            return .success(true)
+        }
+    
+    func getAllTodos() -> [Todo] {
+        return todos
+    }
 }

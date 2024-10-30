@@ -23,9 +23,7 @@ struct GridTabView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Delete Last") {
-                        Task {
-                            await viewModel.deleteLastTodo()
-                        }
+                        viewModel.deleteLastTodoAsync()
                     }
                 }
             }
