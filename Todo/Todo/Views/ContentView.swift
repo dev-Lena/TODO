@@ -12,6 +12,5 @@ struct ContentView: View {
             GridTabView(viewModel: GridTabViewModel(todoService))
                 .tabItem { Label("Grid", systemImage: "square.grid.2x2") }
         }
-        .environmentObject(todoService)
     }
 }

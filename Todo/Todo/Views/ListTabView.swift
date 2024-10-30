@@ -5,7 +5,7 @@ struct ListTabView: View {
     @StateObject var viewModel: ListTabViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(viewModel.todos) { todo in 
                     Text(todo.title)
