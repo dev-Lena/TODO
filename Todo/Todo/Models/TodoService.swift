@@ -2,7 +2,7 @@
 import Combine
 import Foundation
 
-class TodoService: ObservableObject {
+actor TodoService: ObservableObject {
     private let repository = TodoRepository()
     private var todos: [Todo] = []
     private let todosSubject = CurrentValueSubject<[Todo], Never>([])
